@@ -1,0 +1,23 @@
+---
+- name: Enable OSPF Playbook on one device(router)
+  hosts: R1, R2, S1, S2         #can mention all the devices or simply can create a speparte group in the hosts file and maintain accordingly.
+  gather_facts: false
+  connection: local
+
+  vars:
+    cli:
+      username: girish
+      password: cisco
+  
+  tasks:
+    - name: Enable ospf in mul cisco devices
+      ios_config:
+        provider: "{{ cli }}"
+        authorize: yes
+        parents: router ospf 1
+        lines:
+          - network 0.0.0.0 255.255.255.255 area 0
+         
+      register: print_output
+      
+    - debug: var=print_output
