@@ -6,7 +6,7 @@
   
   tasks:
     - name: run enable mode/level commands
-      ios_commands:
+      ios_command:
         authorize: yes
         commands:
           - show run
@@ -15,4 +15,4 @@
     - debug: var=print_output.stdout_lines
     
     - name: save that output fetched to sep files(s)
-      copy: content-"{{ print_output.stdout[0] }}" dest="./output/{{ inventory_hostname }}.txt"
+      copy: content="{{ print_output.stdout[0] }}" dest="./output/{{ inventory_hostname }}.txt"
