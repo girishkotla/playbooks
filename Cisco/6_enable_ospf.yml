@@ -1,13 +1,18 @@
 ---
-- name: Enable OSPF Playbook on a single router
+- name: Enable OSPF Playbook on one device(router)
   hosts: R1
   gather_facts: false
   connection: local
+
+  vars:
+    cli:
+      username: girish
+      password: cisco
   
   tasks:
     - name: Enable ospf
       ios_config:
-        provider: "{{ CLI }}"
+        provider: "{{ cli }}"
         authorize: yes
         parents: router ospf 1
         lines:
