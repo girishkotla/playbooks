@@ -1,0 +1,48 @@
+---
+- name: Play-1 is here
+  hosts: gns-routers
+  gather_facts: false
+  connection: local
+  
+  vars:
+    cli:
+      username: girish
+      password: cisco
+  
+  tasks:
+    - name: enable ospf
+      ios_config:
+        provider: "{{ cli }}"
+        authorize: yes
+        parents: router ospf 1
+        lines:
+          - network 0.0.0.0 255.255.255.255 area 0
+       
+       register: print_output
+     
+     -  debug: var=print_output\
+ 
+- name: Play-2 is here
+  hosts: gns-switches
+  gather_facts: false
+  connection: local
+  
+  vars:
+    cli:
+      username: girish
+      password: cisco
+   
+  tasks:
+    - name: create VLANS
+      ios_config:
+        provider: "{{ cli }}"
+        authorize: yes
+        parents: router ospf 1
+        lines:
+          - vlan 1
+          - valn 2
+          - valn 3-10
+        
+      register: print_output
+      
+    - debug: var=print_output
