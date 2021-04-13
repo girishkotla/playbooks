@@ -1,0 +1,12 @@
+---
+- name: Get the MAC information
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: show mac table
+      raw: "show mac address-table"
+
+      register: print_output
+
+    - debug: print_output.stdout_lines
